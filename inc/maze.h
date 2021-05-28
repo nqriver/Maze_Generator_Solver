@@ -2,6 +2,7 @@
 #define MAZE_H
 
 #include "cell.h"
+#include <array>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -27,16 +28,16 @@ signals:
 protected:
     static constexpr int width  { 30 };
     static constexpr int height { 30 };
-    std::array<std::array<std::shared_ptr<Cell>, width>, height> grid;
-    std::shared_ptr<Cell>       entry;
-    std::shared_ptr<Cell>       exit;
-    QPointer<QGraphicsScene>    scene;
+    std::array<std::array<std::unique_ptr<Cell>, width>, height> grid;
+    Cell* entry;      //observer ptr
+    Cell* exit;       //observer ptr
+    QPointer<QGraphicsScene> scene;
 
 public:
 
     Maze(QWidget *parent = nullptr);
     ~Maze();
-    std::shared_ptr<Cell> getAdjacentCell(Cell*);
+    Cell* getAdjacentCell(Cell*);
     void hideWalls(Cell*, Cell*);
     bool rightNeighbourAvailable(Cell*)  const;
     bool leftNeighbourAvailable(Cell*)   const;

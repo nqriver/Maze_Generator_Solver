@@ -15,10 +15,9 @@ Cell::Cell(int x, int y, QGraphicsScene *scene) :
 
     square = std::make_unique<QGraphicsRectItem>(temp_x, temp_y, sideLength, sideLength);
     square->setBrush(QBrush(QColor(Qt::green), Qt::SolidPattern));
-    pen->setWidth(4);
     square->setPen(Qt::NoPen);
-//    square->show();
-//    pen->setColor(QColor(Qt::black));
+
+    pen->setWidth(4);
     upper = std::make_unique<QGraphicsLineItem>(temp_x, temp_y, temp_x + sideLength, temp_y);
     bottom = std::make_unique<QGraphicsLineItem>(temp_x, temp_y + sideLength, temp_x + sideLength, temp_y + sideLength);
     left = std::make_unique<QGraphicsLineItem>(temp_x, temp_y, temp_x, temp_y + sideLength);

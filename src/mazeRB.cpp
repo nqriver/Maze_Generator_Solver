@@ -4,7 +4,7 @@
 MazeRB::MazeRB(QWidget *parent)
     : Maze(parent)
 {
-    currentCell = grid[0][0];
+    currentCell = grid[0][0].get();
     currentCell->setCellStatusPassed();
     currentCell->setColorMagenta();
     history.push(currentCell);
@@ -66,8 +66,8 @@ void MazeRB::solve()
     trackedCell = solveHistory.front();
     trackedCell->setColorRed();
 
-    std::vector<std::shared_ptr<Cell>> neighbours{};
-    setNeighboursBFS(trackedCell.get(), neighbours);
+    std::vector<Cell*> neighbours{};
+    setNeighboursBFS(trackedCell, neighbours);
     solveHistory.pop_front();
 
     if (trackedCell == exit){
@@ -95,10 +95,10 @@ void MazeRB::solve()
 
 
 void MazeRB::generate(){
-    nextCell = getAdjacentCell(currentCell.get());
+    nextCell = getAdjacentCell(currentCell);
     if (nextCell != nullptr)
     {
-        hideWalls(currentCell.get(), nextCell.get());
+        hideWalls(currentCell, nextCell);
         currentCell->setColorDefault();
         nextCell->setColorMagenta();
         history.push(nextCell);
@@ -120,26 +120,26 @@ void MazeRB::generate(){
 }
 
 
-void MazeRB::setNeighboursBFS(Cell* A, std::vector<std::shared_ptr<Cell>> &neighbours)
+void MazeRB::setNeighboursBFS(Cell* A, std::vector<Cell*>& neighbours)
 {
     neighbours.clear();
     int A_x { A->get_x() };
     int A_y { A->get_y() };
 
     if (A->wayDownOpen() && A_y < Maze::height - 1){
-        neighbours.push_back(grid[A_x][A_y+1]);
+        neighbours.push_back(grid[A_x][A_y+1].get());
     }
 
     if (A->wayUpOpen() && A_y > 0){
-        neighbours.push_back(grid[A_x][A_y-1]);
+        neighbours.push_back(grid[A_x][A_y-1].get());
     }
 
     if (A->wayLeftOpen() && A_x > 0){
-        neighbours.push_back(grid[A_x-1][A_y]);
+        neighbours.push_back(grid[A_x-1][A_y].get());
     }
 
     if (A->wayRightOpen() && A_x < Maze::width - 1){
-        neighbours.push_back(grid[A_x+1][A_y]);
+        neighbours.push_back(grid[A_x+1][A_y].get());
     }
 
 }

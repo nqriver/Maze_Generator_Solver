@@ -19,12 +19,12 @@ Maze::Maze(QWidget *parent)
     {
         for (int y = 0; y < height; ++y)
         {
-            grid[x][y] = std::make_shared<Cell>(x, y, scene);
+            grid[x][y] = std::make_unique<Cell>(x, y, scene);
         }
     }
 
-    entry = grid[0][0];
-    exit = grid[width-1][height-1];
+    entry = grid[0][0].get();
+    exit = grid[width-1][height-1].get();
 }
 
 Maze::~Maze()
@@ -32,30 +32,30 @@ Maze::~Maze()
     delete ui;
 }
 
-std::shared_ptr<Cell> Maze::getAdjacentCell(Cell* current)
+Cell* Maze::getAdjacentCell(Cell* current)
 {
     int currentX { current->get_x() };
     int currentY { current->get_y() };
-    std::vector<std::shared_ptr<Cell>> availableCells;
+    std::vector<Cell*> availableCells;
 
     if (upperNeigbourAvailable(current))
     {
-        availableCells.push_back(grid[currentX][currentY-1]);
+        availableCells.push_back(grid[currentX][currentY-1].get());
     }
 
     if (bottomNeighbourAvailable(current))
     {
-        availableCells.push_back(grid[currentX][currentY+1]);
+        availableCells.push_back(grid[currentX][currentY+1].get());
     }
 
     if (leftNeighbourAvailable(current))
     {
-        availableCells.push_back(grid[currentX-1][currentY]);
+        availableCells.push_back(grid[currentX-1][currentY].get());
     }
 
     if (rightNeighbourAvailable(current))
     {
-        availableCells.push_back(grid[currentX+1][currentY]);
+        availableCells.push_back(grid[currentX+1][currentY].get());
     }
 
 

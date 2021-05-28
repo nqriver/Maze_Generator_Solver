@@ -34,7 +34,7 @@ private:
     std::unique_ptr<QGraphicsLineItem> right{};
 
 public:
-    std::shared_ptr<Cell> visitedFrom;
+    Cell* visitedFrom;
     static constexpr int sideLength { 20 };
 
     Cell(int x, int y, QGraphicsScene *scene);

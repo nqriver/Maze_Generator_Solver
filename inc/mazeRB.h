@@ -33,17 +33,17 @@ private:
     QPointer<QTimer> timer3 { nullptr };
 
 
-    std::shared_ptr<Cell> currentCell;
-    std::shared_ptr<Cell> nextCell;
-    std::stack<std::shared_ptr<Cell>> history;
+    Cell* currentCell;  //used in generating algorithm
+    Cell* nextCell;     //used in generating algorithm
+    std::stack<Cell*> history; //used in generating algorithm
 
 
-    std::shared_ptr<Cell> trackedCell { nullptr };
-    std::deque<std::shared_ptr<Cell>> solveHistory;
-    void setNeighboursBFS(Cell* A, std::vector<std::shared_ptr<Cell>>& neighbours);
+    Cell* trackedCell { nullptr }; //used in solving algorithm
+    std::deque<Cell*> solveHistory; //used in solving algorithm
+    void setNeighboursBFS(Cell* A, std::vector<Cell*>& neighbours); //used in solving algorithm
 
 
-    std::shared_ptr<Cell> path { nullptr };
+    Cell* path { nullptr }; //used in final path drawing
 };
 
 #endif // MAZERB_H
